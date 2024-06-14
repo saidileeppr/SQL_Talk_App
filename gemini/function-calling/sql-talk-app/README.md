@@ -77,3 +77,8 @@ similar to:
 [https://sql-talk-r5gdynozbq-uc.a.run.app/](https://sql-talk-r5gdynozbq-uc.a.run.app/)
 
 Congratulations, you've successfully deployed the SQL Talk demo app!
+
+
+cd ~/cloudshell_open/generative-ai/gemini/function-calling/sql-talk-app
+
+~/miniforge/bin/streamlit run app.py --server.enableCORS=false --server.enableXsrfProtection=false --server.port 8080

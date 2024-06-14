@@ -4,7 +4,7 @@ from google.cloud import bigquery
 import streamlit as st
 from vertexai.generative_models import FunctionDeclaration, GenerativeModel, Part, Tool
 
-BIGQUERY_DATASET_ID = "thelook_ecommerce"
+BIGQUERY_DATASET_ID = "DS1"
 
 list_datasets_func = FunctionDeclaration(
     name="list_datasets",
@@ -76,7 +76,7 @@ sql_query_tool = Tool(
 )
 
 model = GenerativeModel(
-    "gemini-1.0-pro-001",
+    "gemini-1.5-pro-001",
     generation_config={"temperature": 0},
     tools=[sql_query_tool],
 )
@@ -102,7 +102,7 @@ st.markdown(
 with st.expander("Sample prompts", expanded=True):
     st.write(
         """
-        - What kind of information is in this database?
+        - What is the average salary of the employee?
         - What percentage of orders are returned?
         - How is inventory distributed across our regional distribution centers?
         - Do customers typically place more than one order?
@@ -160,7 +160,8 @@ if prompt := st.chat_input("Ask me about information in the database..."):
 
                 if response.function_call.name == "list_datasets":
                     api_response = client.list_datasets()
-                    api_response = BIGQUERY_DATASET_ID
+                    api_response = str([dataset.dataset_id for dataset in api_response])
+                    #api_response = BIGQUERY_DATASET_ID
                     api_requests_and_responses.append(
                         [response.function_call.name, params, api_response]
                     )
